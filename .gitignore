@@ -30,3 +30,6 @@ node_modules/
 # Build outputs (if you add any build process later)
 dist/
 build/
+
+# Documentation (add back when needed)
+README.md
