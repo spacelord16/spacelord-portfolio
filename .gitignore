@@ -33,3 +33,7 @@ build/
 
 # Documentation (add back when needed)
 README.md
+
+# Original image files (keep converted versions)
+*.HEIC
+*.heic
