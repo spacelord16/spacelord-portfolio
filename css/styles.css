@@ -1,0 +1,174 @@
+/* CSS Variables for Light/Dark Theme */
+:root {
+  --bg: #0b0c0f;
+  --fg: #e5e7eb;
+  --muted: #a1a6b0;
+  --card: #111317;
+  --line: #1b1f26;
+  --accent: #8ab4ff;
+  --accent-weak: #304b86;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --fg: #0b0c0f;
+    --muted: #5b636e;
+    --card: #f7f8fa;
+    --line: #e8eaee;
+    --accent: #1f6feb;
+    --accent-weak: #dbe7ff;
+  }
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layout */
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 56px 20px;
+}
+
+/* Navigation */
+.top {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  position: sticky;
+  top: 0;
+  backdrop-filter: saturate(140%) blur(4px);
+  background: color-mix(in oklab, var(--bg) 90%, transparent);
+}
+
+.top a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.top a.active {
+  color: var(--fg);
+  border-color: var(--fg);
+}
+
+/* Main Content */
+main {
+  padding-top: 28px;
+}
+
+section {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Typography */
+h1 {
+  font-size: 1.75rem;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.lead {
+  max-width: 64ch;
+  color: var(--muted);
+}
+
+/* Lists and Items */
+.list {
+  display: grid;
+  gap: 18px;
+}
+
+.item a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.item a:hover {
+  text-decoration: underline;
+}
+
+.item p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+/* Form Elements */
+.newsletter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+input[type="email"] {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 260px;
+}
+
+button {
+  background: var(--card);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: var(--fg);
+}
+
+/* Links */
+.links {
+  display: grid;
+  gap: 10px;
+}
+
+a.simple {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Utilities */
+.muted {
+  color: var(--muted);
+}
+
+/* Footer */
+footer {
+  padding: 28px 0 8px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
