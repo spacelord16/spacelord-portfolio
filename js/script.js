@@ -346,3 +346,70 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     }
   });
 });
+
+// Dynamic active nav link based on scroll position
+(function setupActiveNavOnScroll() {
+  const nav = document.querySelector("nav.top");
+  if (!nav) return;
+
+  const navLinks = Array.from(nav.querySelectorAll("a"));
+  const sectionByHref = new Map();
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    // Treat "#" as intro
+    const selector = href === "#" ? "#intro" : href;
+    const section = document.querySelector(selector);
+    if (section) sectionByHref.set(href, section);
+  });
+
+  function setActiveLinkFor(selector) {
+    navLinks.forEach((l) => l.classList.remove("active"));
+    const match =
+      nav.querySelector(`a[href="${selector}"]`) ||
+      nav.querySelector('a[href="#"]');
+    if (match) match.classList.add("active");
+  }
+
+  // Observe sections' visibility
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // Find the entry most in view near the top
+      const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort(
+          (a, b) =>
+            Math.abs(a.boundingClientRect.top) -
+            Math.abs(b.boundingClientRect.top)
+        );
+      if (visible.length) {
+        const id = `#${visible[0].target.id}`;
+        // Map back to original hrefs (handle intro vs #)
+        const selector = id === "#intro" ? "#" : id;
+        setActiveLinkFor(selector);
+      }
+    },
+    {
+      root: null,
+      // Trigger when section enters the upper half of viewport
+      rootMargin: "-40% 0px -60% 0px",
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+    }
+  );
+
+  // Start observing
+  sectionByHref.forEach((section) => observer.observe(section));
+
+  // Update on hash change and on load
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash || "#";
+    setActiveLinkFor(hash);
+  });
+
+  // Initial set based on current scroll position
+  setTimeout(() => {
+    const hash = window.location.hash || "#";
+    setActiveLinkFor(hash);
+  }, 0);
+})();
