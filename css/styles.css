@@ -420,3 +420,168 @@ footer {
 .item:nth-child(5) {
   animation-delay: 0.5s;
 }
+
+/* Enhanced Research Impact Styling */
+.research-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--fg);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--fg);
+  display: block;
+  margin-bottom: 8px;
+  animation: countUp 1s ease-out;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Publication Cards */
+.publication-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.publication-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--fg) 0%, var(--muted) 100%);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.publication-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.publication-card:hover::before {
+  opacity: 1;
+}
+
+.publication-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--fg);
+}
+
+.publication-authors {
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.publication-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.publication-venue {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.citation-badge {
+  background: var(--line);
+  color: var(--fg);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Invited Talks Enhancement */
+.talks-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.talk-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  transition: var(--transition);
+  border-left: 4px solid var(--line);
+}
+
+.talk-card:hover {
+  border-left-color: var(--fg);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-soft);
+}
+
+.talk-venue {
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 8px;
+}
+
+.talk-description {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
