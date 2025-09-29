@@ -65,23 +65,34 @@ body {
   gap: 24px;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 14px;
+  padding: 14px 0;
   position: sticky;
   top: 0;
-  backdrop-filter: saturate(140%) blur(4px);
-  background: color-mix(in oklab, var(--bg) 90%, transparent);
+  z-index: 1000;
+  backdrop-filter: saturate(180%) blur(20px);
+  background: color-mix(in oklab, var(--bg) 95%, transparent);
+  box-shadow: 0 1px 0 var(--line);
 }
 
 .top a {
   color: var(--muted);
   text-decoration: none;
-  padding: 8px 0;
+  padding: 8px 16px;
   border-bottom: 2px solid transparent;
+  border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.top a:hover {
+  color: var(--fg);
+  background: color-mix(in oklab, var(--fg) 10%, transparent);
 }
 
 .top a.active {
   color: var(--fg);
   border-color: var(--fg);
+  background: color-mix(in oklab, var(--fg) 8%, transparent);
 }
 
 /* Main Content */
@@ -395,8 +406,14 @@ footer {
   }
 
   .top {
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
+    padding: 12px 0;
+  }
+  
+  .top a {
+    padding: 6px 12px;
+    font-size: 0.95rem;
   }
 }
 
@@ -441,7 +458,7 @@ footer {
 }
 
 .metric-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -499,7 +516,7 @@ footer {
 }
 
 .publication-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
