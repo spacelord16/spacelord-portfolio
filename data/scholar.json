@@ -1,0 +1,10 @@
+{
+    "total_citations": 89,
+    "h_index": 3,
+    "i10_index": 2,
+    "papers": {
+        "paper1": 69,
+        "paper2": 15,
+        "paper3": 5
+    }
+}
