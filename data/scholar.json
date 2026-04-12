@@ -1,14 +1,4 @@
 {
-<<<<<<< HEAD
-    "total_citations": 98,
-    "h_index": 3,
-    "i10_index": 2,
-    "papers": {
-        "paper1": 72,
-        "paper2": 21,
-        "paper3": 5
-    }
-=======
   "total_citations": 98,
   "h_index": 3,
   "i10_index": 2,
@@ -17,5 +7,4 @@
     "paper2": 21,
     "paper3": 5
   }
->>>>>>> 5ec649a597b08b5ae2d96f712d9d7c035097f90c
 }

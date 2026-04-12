@@ -491,3 +491,20 @@ class CommandPalette {
 document.addEventListener("DOMContentLoaded", () => {
   new CommandPalette();
 });
+
+// --- Copy Email Function ---
+function copyEmail(btn) {
+  const email = "deshpande.aditya16@gmail.com";
+  navigator.clipboard.writeText(email).then(() => {
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = `Copied! <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    btn.classList.add("copied");
+    
+    setTimeout(() => {
+      btn.innerHTML = originalContent;
+      btn.classList.remove("copied");
+    }, 2000);
+  }).catch(err => {
+    console.warn("Clipboard access denied", err);
+  });
+}
