@@ -6,17 +6,17 @@ class ScholarUpdater {
   constructor() {
     this.dataPath = "data/scholar.json";
     this.fallbackData = {
-      totalCitations: 89,
+      totalCitations: 98,
       hIndex: 3,
       i10Index: 2,
       publications: [
         {
           id: "paper1",
-          citations: 69,
+          citations: 72,
         },
         {
           id: "paper2",
-          citations: 15,
+          citations: 21,
         },
         {
           id: "paper3",
