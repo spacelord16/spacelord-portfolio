@@ -40,7 +40,12 @@
                 vision. I build practical ML systems that transform complex data
                 into actionable insights.
               </p>
-              <p class="muted" style="margin-top: 12px">
+              <div class="status-indicator" title="Live status from Cortex">
+                <span class="pulse-dot"></span>
+                <span class="status-text" id="live-status">Building ML pipelines at ASU</span>
+              </div>
+              
+              <p class="muted" style="margin-top: 16px">
                 Tempe, AZ ·
                 <a class="simple" href="mailto:deshpande.aditya16@gmail.com"
                   >deshpande.aditya16@gmail.com</a
@@ -396,6 +401,25 @@
 
         <footer>© <span id="y"></span> Aditya Deshpande</footer>
       </main>
+    </div>
+
+    <!-- Command Palette (⌘K) -->
+    <div id="cmd-palette" class="cmd-hidden">
+      <div class="cmd-overlay"></div>
+      <div class="cmd-modal">
+        <div class="cmd-input-wrapper">
+          <svg class="cmd-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="cmd-input" placeholder="Type a command or search..." autocomplete="off" spellcheck="false">
+        </div>
+        <ul id="cmd-results">
+          <!-- Populated by JS -->
+        </ul>
+        <div class="cmd-footer">
+          <span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+          <span><kbd>↵</kbd> to select</span>
+          <span><kbd>ESC</kbd> to close</span>
+        </div>
+      </div>
     </div>
 
     <script src="js/script.js"></script>

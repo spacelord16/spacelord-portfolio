@@ -325,3 +325,169 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     setActiveLinkFor(hash);
   }, 0);
 })();
+
+// --- Command Palette (⌘K) ---
+class CommandPalette {
+  constructor() {
+    this.palette = document.getElementById("cmd-palette");
+    this.input = document.getElementById("cmd-input");
+    this.resultsContainer = document.getElementById("cmd-results");
+    
+    // Define the available commands
+    this.commands = [
+      { id: "projects", title: "Go to Projects", action: () => this.scrollTo("#projects"), icon: "🚀" },
+      { id: "experience", title: "Go to Experience", action: () => this.scrollTo("#experience"), icon: "💼" },
+      { id: "education", title: "Go to Education", action: () => this.scrollTo("#education"), icon: "🎓" },
+      { id: "publications", title: "Go to Publications", action: () => this.scrollTo("#publications"), icon: "📚" },
+      { id: "email", title: "Copy Email Address", action: () => this.copyText("deshpande.aditya16@gmail.com"), icon: "✉️" },
+      { id: "github", title: "View GitHub", action: () => window.open("https://github.com/spacelord16", "_blank"), icon: "💻" },
+      { id: "linkedin", title: "View LinkedIn", action: () => window.open("https://www.linkedin.com/in/adityadeshpande16/", "_blank"), icon: "🔗" },
+      { id: "scholar", title: "View Google Scholar", action: () => window.open("https://scholar.google.com/citations?user=keOjVIEAAAAJ&hl=en", "_blank"), icon: "🎓" },
+      { id: "theme", title: "Toggle Light/Dark Theme (Coming Soon)", action: () => alert("Stay in the dark side for now ;)"), icon: "🌓" }
+    ];
+
+    this.selectedIndex = 0;
+    this.filteredCommands = [...this.commands];
+    
+    this.init();
+  }
+
+  init() {
+    if (!this.palette || !this.input) return;
+
+    // Listen for Cmd+K or Ctrl+K
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        this.toggle();
+      }
+      
+      // Close on Escape
+      if (e.key === "Escape" && !this.palette.classList.contains("cmd-hidden")) {
+        this.close();
+      }
+    });
+
+    // Close when clicking overlay
+    this.palette.addEventListener("click", (e) => {
+      if (e.target.classList.contains("cmd-overlay")) {
+        this.close();
+      }
+    });
+
+    // Handle typing
+    this.input.addEventListener("input", (e) => {
+      this.filterResults(e.target.value);
+    });
+
+    // Handle keyboard navigation
+    this.input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        this.selectedIndex = Math.min(this.selectedIndex + 1, this.filteredCommands.length - 1);
+        this.renderResults();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        this.selectedIndex = Math.max(this.selectedIndex - 1, 0);
+        this.renderResults();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (this.filteredCommands[this.selectedIndex]) {
+          this.executeCommand(this.filteredCommands[this.selectedIndex]);
+        }
+      }
+    });
+  }
+
+  toggle() {
+    if (this.palette.classList.contains("cmd-hidden")) {
+      this.open();
+    } else {
+      this.close();
+    }
+  }
+
+  open() {
+    this.palette.classList.remove("cmd-hidden");
+    this.input.value = "";
+    this.filterResults("");
+    this.input.focus();
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+  }
+
+  close() {
+    this.palette.classList.add("cmd-hidden");
+    document.body.style.overflow = "";
+    document.activeElement.blur();
+  }
+
+  filterResults(query) {
+    const lowerQuery = query.toLowerCase();
+    this.filteredCommands = this.commands.filter(c => 
+      c.title.toLowerCase().includes(lowerQuery) || c.id.includes(lowerQuery)
+    );
+    this.selectedIndex = 0;
+    this.renderResults();
+  }
+
+  renderResults() {
+    this.resultsContainer.innerHTML = "";
+    
+    if (this.filteredCommands.length === 0) {
+      const li = document.createElement("li");
+      li.textContent = "No commands found...";
+      li.style.color = "var(--muted)";
+      li.style.pointerEvents = "none";
+      this.resultsContainer.appendChild(li);
+      return;
+    }
+
+    this.filteredCommands.forEach((cmd, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span>${cmd.icon}</span> <span>${cmd.title}</span>`;
+      
+      if (index === this.selectedIndex) {
+        li.classList.add("cmd-selected");
+        // Ensure scrolling follows selection
+        li.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+      
+      li.addEventListener("mouseenter", () => {
+        this.selectedIndex = index;
+        this.renderResults();
+      });
+      
+      li.addEventListener("click", () => {
+        this.executeCommand(cmd);
+      });
+      
+      this.resultsContainer.appendChild(li);
+    });
+  }
+
+  executeCommand(cmd) {
+    this.close();
+    cmd.action();
+  }
+
+  scrollTo(selector) {
+    const target = document.querySelector(selector);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const originalTitle = document.title;
+      document.title = "Copied to clipboard!";
+      setTimeout(() => document.title = originalTitle, 2000);
+    }).catch(err => {
+      console.warn("Clipboard access denied", err);
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  new CommandPalette();
+});
