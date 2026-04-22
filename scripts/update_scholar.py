@@ -44,23 +44,26 @@ def get_scholar_data():
 
 if __name__ == "__main__":
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    
+    existing_data = None
+    try:
+        with open(OUTPUT_FILE, "r") as f:
+            existing_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = None
+
     print("Fetching Google Scholar data...")
     new_data = get_scholar_data()
-    
+
     if new_data:
-        # Load existing data to check if there are changes (optional but good for tracking)
-        try:
-            with open(OUTPUT_FILE, 'r') as f:
-                old_data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            old_data = {}
-            
         with open(OUTPUT_FILE, 'w') as f:
             json.dump(new_data, f, indent=2)
-            
+
         print(f"Successfully saved scholar data to {OUTPUT_FILE}")
     else:
-        print("Failed to fetch new data.")
-        # Exit with error code so GitHub actions knows it failed
+        if existing_data is not None:
+            print("Failed to fetch new data; keeping existing scholar.json.")
+            # Keep workflow green when Scholar blocks CI traffic.
+            exit(0)
+
+        print("Failed to fetch new data and no existing scholar.json found.")
         exit(1)

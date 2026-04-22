@@ -27,7 +27,7 @@ jobs:
         pip install scholarly
 
     - name: Run Scholar Scraper
-      run: python scripts/update_scholar.py
+      run: timeout 300 python scripts/update_scholar.py || echo "Scholar fetch timed out; keeping existing data."
 
     - name: Commit and Push changes
       run: |
