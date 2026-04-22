@@ -5,6 +5,11 @@ document.getElementById("y").textContent = new Date().getFullYear();
 class ScholarUpdater {
   constructor() {
     this.dataPath = "data/scholar.json";
+    this.paperTitleMap = {
+      paper1: "Machine learning for cognitive behavioral analysis",
+      paper2: "Multimodal Machine Learning for Deception Detection",
+      paper3: "CoviCare: Tracking Covid-19 using PowerBI",
+    };
     this.fallbackData = {
       totalCitations: 98,
       hIndex: 3,
@@ -156,7 +161,8 @@ class ScholarUpdater {
       transition: all 0.3s ease;
     `;
 
-    notification.textContent = `Updated: ${paper.title.substring(0, 40)}... (${
+    const paperTitle = this.paperTitleMap[paper.id] || paper.id;
+    notification.textContent = `Updated: ${paperTitle.substring(0, 40)}... (${
       paper.citations
     } citations)`;
 

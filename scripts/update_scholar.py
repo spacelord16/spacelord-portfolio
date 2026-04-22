@@ -1,17 +1,14 @@
 import json
 import os
-from scholarly import scholarly, ProxyGenerator
+from scholarly import scholarly
 
 SCHOLAR_ID = "keOjVIEAAAAJ"
 OUTPUT_FILE = "data/scholar.json"
 
 def get_scholar_data():
     try:
-        # Set up a ProxyGenerator to bypass Google Scholar rate limiting on GitHub Actions IPs
-        pg = ProxyGenerator()
-        pg.FreeProxies()
-        scholarly.use_proxy(pg)
-        
+        # Avoid proxy providers in CI: recent dependency updates can break proxy wiring.
+        # Use direct requests and fail gracefully if Scholar is temporarily unavailable.
         author = scholarly.search_author_id(SCHOLAR_ID)
         author = scholarly.fill(author, sections=['indices', 'counts', 'publications'])
         
